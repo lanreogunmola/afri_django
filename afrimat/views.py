@@ -7,7 +7,7 @@ from rest_framework import viewsets
 from models import Product
 from serializers import ProductSerializer
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from forms import RegistrationForm
 from permissions import BelongsToUser
 import json
@@ -21,7 +21,7 @@ class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     #authentication_classes = (TokenAuthentication,)
-    #permission_classes = (IsAuthenticated, BelongsToUser,)# comment to view products without login
+    #permission_classes = (IsAuthenticatedOrReadOnly)# comment to view products without login
     
     def get_queryset(self):
     	#if request.User.is_authenticated():
@@ -30,9 +30,14 @@ class ProductViewSet(viewsets.ModelViewSet):
         return Product.objects.all()
 
     def perform_create(self, serializer):
-        #if self.request.user.IsAuthenticated():
-        # serializer.save(user=self.request.user)
+         #authentication_classes = (TokenAuthentication,)
+         #permission_classes = (IsAuthenticated, BelongsToUser,)
+         #if serializer.is_valid():
+         #serializer.save(user=self.request.user)
          serializer.save()
+
+
+
 
 
 @require_http_methods(["POST"])

@@ -22,6 +22,7 @@ from afrimat.views import ProductViewSet, register
 
 router = routers.DefaultRouter(trailing_slash=False)
 router.register("products", ProductViewSet, base_name="product")
+# router.register("productsdealer", ProductViewSet2, base_name="productsdealer")
 
 urlpatterns = [
     url(r'^api-auth-token/', obtain_auth_token),
