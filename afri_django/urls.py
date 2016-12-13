@@ -18,10 +18,11 @@ from django.contrib import admin
 
 from rest_framework.authtoken.views import obtain_auth_token
 from rest_framework import routers
-from afrimat.views import ProductViewSet, register
+from afrimat.views import * 
 
 router = routers.DefaultRouter(trailing_slash=False)
 router.register("products", ProductViewSet, base_name="product")
+
 # router.register("productsdealer", ProductViewSet2, base_name="productsdealer")
 
 urlpatterns = [
@@ -29,5 +30,7 @@ urlpatterns = [
     url(r'^api/', include(router.urls)),
     url(r'^api-register/', register),
     url(r'^admin/', admin.site.urls),
+    #url(r'^admin/', admin.site.urls),
+    url(r'^', home),
 ]
 
