@@ -28,7 +28,7 @@ class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     #authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticatedOrReadOnly,)# comment to view products without login
+    #permission_classes = (IsAuthenticatedOrReadOnly,)# comment to view products without login
     
     def get_queryset(self):
     	if self.request.user.is_authenticated():
@@ -45,6 +45,31 @@ class ProductViewSet(viewsets.ModelViewSet):
          else: 
              serializer.save()
 
+
+class ProductViewSet2(viewsets.ModelViewSet):
+    """
+    API endpoint that allows Products to be Created/edited/retrieved and destroyed.
+    """
+    #print  self.request.user
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    #authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated, BelongsToUser, )# comment to view products without login
+    
+    def get_queryset(self):
+        if self.request.user.is_authenticated():
+
+             return Product.objects.filter(user=self.request.user)
+        else:
+              return Product.objects.all()
+
+    def perform_create(self, serializer):
+         
+         if self.request.user.is_authenticated():
+
+             serializer.save()
+         else: 
+             serializer.save()
 
 
 
