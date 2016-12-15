@@ -9,7 +9,7 @@ from serializers import ProductSerializer
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from forms import RegistrationForm
-from permissions import BelongsToUser
+from permissions import BelongsToUser, IsOwnerOrReadOnly
 import json
 
 
@@ -28,7 +28,7 @@ class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     #authentication_classes = (TokenAuthentication,)
-    #permission_classes = (IsAuthenticatedOrReadOnly,)# comment to view products without login
+    permission_classes = (BelongsToUser,)# comment to view products without login
     
     def get_queryset(self):
     	if self.request.user.is_authenticated():
@@ -45,31 +45,37 @@ class ProductViewSet(viewsets.ModelViewSet):
          else: 
              serializer.save()
 
+    def delete(self, request, pk):
+        Product = self.get_object(pk)
+        print Product
+        Product.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
-class ProductViewSet2(viewsets.ModelViewSet):
-    """
-    API endpoint that allows Products to be Created/edited/retrieved and destroyed.
-    """
-    #print  self.request.user
-    queryset = Product.objects.all()
-    serializer_class = ProductSerializer
-    #authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated, BelongsToUser, )# comment to view products without login
+
+# class ProductViewSet2(viewsets.ModelViewSet):
+#     """
+#     API endpoint that allows Products to be Created/edited/retrieved and destroyed.
+#     """
+#     #print  self.request.user
+#     queryset = Product.objects.all()
+#     serializer_class = ProductSerializer
+#     #authentication_classes = (TokenAuthentication,)
+#     permission_classes = (IsAuthenticated, BelongsToUser, )# comment to view products without login
     
-    def get_queryset(self):
-        if self.request.user.is_authenticated():
+#     def get_queryset(self):
+#         if self.request.user.is_authenticated():
 
-             return Product.objects.filter(user=self.request.user)
-        else:
-              return Product.objects.all()
+#              return Product.objects.filter(user=self.request.user)
+#         else:
+#               return Product.objects.all()
 
-    def perform_create(self, serializer):
+#     def perform_create(self, serializer):
          
-         if self.request.user.is_authenticated():
+#          if self.request.user.is_authenticated():
 
-             serializer.save()
-         else: 
-             serializer.save()
+#              serializer.save()
+#          else: 
+#              serializer.save()
 
 
 

@@ -22,7 +22,7 @@ from afrimat.views import *
 
 router = routers.DefaultRouter(trailing_slash=False)
 router.register("products", ProductViewSet, base_name="product")
-router.register("productsdealer", ProductViewSet2, base_name="productsdealer")
+#router.register("productsdealer", ProductViewSet2, base_name="productsdealer")
 
 
 # router.register("productsdealer", ProductViewSet2, base_name="productsdealer")
