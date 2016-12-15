@@ -28,7 +28,7 @@ class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     #authentication_classes = (TokenAuthentication,)
-    #permission_classes = (IsAuthenticatedOrReadOnly,)# comment to view products without login
+    permission_classes = (IsAuthenticatedOrReadOnly,)# comment to view products without login
     
     def get_queryset(self):
     	if self.request.user.is_authenticated():
