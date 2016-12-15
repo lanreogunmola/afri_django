@@ -1,11 +1,13 @@
 # afri_django
+#### Installation Guide
 
-
-USER-INSTALLATION
+```bash
+# clone repo into the install directory
 
 git clone https://github.com/lanreogunmola/afri_django.git
 
 cd afri_django
+# Install Django dependencies
 
 pip install django==1.9.8
 
@@ -14,19 +16,11 @@ pip install djangorestframework
 pip install django-cors-headers
 
 pip install djangorestframework-jsonapi==2.0.0-beta.2
-
+```
+### from afri_django directory run
+```bash
 python manage.py runserver
+```
+## Accessing the server
 
-change directory to parent (cd ..)
-Ensure ember 2.8.0 is installed 
-git clone https://github.com/lanreogunmola/afri-ember.git
-
-cd afri-ember
-
-npm install
-
-bower install
-
-ember serve
-
-Visit your app at http://localhost:4200
+Navigate to [http://localhost:8000](http://localhost:8000) on the host. Create a new user and sign in or view site as annoynmous user.
